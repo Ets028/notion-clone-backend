@@ -64,7 +64,7 @@ Ikuti langkah-langkah ini untuk menjalankan server secara lokal:
 ### 2. Clone Repositori
 
 ```bash
-git clone <URL_REPOSITORI_ANDA>
+git clone https://github.com/Ets028/notion-clone-backend.git
 cd notion-clone-backend
 ````
 
