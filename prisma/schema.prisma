@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Mendefinisikan generator client Prisma untuk JavaScript
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Mendefinisikan sumber data (database)
+datasource db {
+  provider = "postgresql" // Menggunakan PostgreSQL
+  url      = env("DATABASE_URL") // Mengambil URL dari environment variable
+}
+
+enum NoteStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+}
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String
+  password  String
+  notes     Note[]
+  tags      Tag[]    // Pengguna memiliki tag mereka sendiri
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Model BARU untuk Tag
+model Tag {
+  id     String  @id @default(cuid())
+  name   String
+  color  String? // Warna tag untuk UI
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  notes  Note[] // Relasi many-to-many dengan Note
+
+  @@unique([userId, name])
+}
+
+model Note {
+  id         String     @id @default(cuid())
+  title      String
+  content    Json?
+  position   Int
+  isFavorite Boolean    @default(false)
+  status     NoteStatus @default(NOT_STARTED)
+  isArchived Boolean    @default(false)
+
+  // --- Properti BARU ---
+  priority   Priority?  // Prioritas (opsional)
+  dueDate    DateTime?  // Tanggal jatuh tempo (opsional)
+  // --------------------
+
+  parentId   String?
+  parent     Note?      @relation("NestedNotes", fields: [parentId], references: [id], onDelete: Cascade)
+  children   Note[]     @relation("NestedNotes")
+
+  author     User       @relation(fields: [authorId], references: [id])
+  authorId   String
+
+  tags       Tag[]      // <-- Relasi many-to-many dengan Tag
+
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([authorId, parentId])
+}
