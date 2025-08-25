@@ -29,7 +29,7 @@ pool.on('connect', () => {
 
 // Middleware
 app.use(cors({
-  origin: "*",
+  origin: "http://localhost:3000",
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 }));
@@ -44,7 +44,7 @@ app.use(session({
     tableName: 'user_sessions',
     createTableIfMissing: true,
   }),
-  secret: process.env.SESSION_SECRET || 'your-default-secret-key',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
