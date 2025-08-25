@@ -22,7 +22,7 @@ const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-//cek koneksi
+//cek koneksi database
 pool.on('connect', () => {
   console.log('Database connected');
 });
@@ -53,6 +53,10 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24 * 7,
   }
 }));
+
+app.use("/", (req, res) => {
+  res.send("notion clone api");
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
