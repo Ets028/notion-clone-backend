@@ -32,6 +32,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1); 
+}
+
 
 app.use(session({
   store: new PgStore({
@@ -45,7 +49,11 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', 
-    maxAge: 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7, 
+    domain: process.env.NODE_ENV === 'production' 
+      ? '.vercel.app'
+      : undefined,
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   }
 }));
 
