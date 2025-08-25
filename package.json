@@ -6,9 +6,14 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "vercel-build": "npx prisma migrate deploy && npx prisma generate"
   },
-  "keywords": [],
+  "keywords": [
+    "express",
+    "prisma",
+    "postgresql",
+    "notion-clone"
+  ],
   "author": "eldevs",
   "license": "ISC",
   "type": "module",

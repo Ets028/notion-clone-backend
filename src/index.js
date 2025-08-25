@@ -11,15 +11,12 @@ import tagRoutes from './routes/tag.routes.js';
 import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  })
-);
+app.use(cors({
+  origin: '*',
+  credentials: true
+}))
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
