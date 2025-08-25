@@ -22,11 +22,6 @@ const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-//cek koneksi database
-pool.on('connect', () => {
-  console.log('Database connected');
-});
-
 // Middleware
 app.use(cors({
   origin: "http://localhost:3000",
