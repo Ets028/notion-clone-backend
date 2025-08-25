@@ -54,8 +54,8 @@ app.use(session({
   }
 }));
 
-app.use("/", (req, res) => {
-  res.send("notion clone api");
+app.use("/api", (req, res) => {
+  res.send("notion clone api v1 running");
 });
 
 // Routes
