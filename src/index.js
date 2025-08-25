@@ -50,9 +50,6 @@ app.use(session({
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production', 
     maxAge: 1000 * 60 * 60 * 24 * 7, 
-    domain: process.env.NODE_ENV === 'production' 
-      ? '.vercel.app'
-      : undefined,
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   }
 }));
